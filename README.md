@@ -74,7 +74,7 @@ If you decided to use a virtual environment you will have to either add this com
 ```bash
 PYTHONPATH=$PYTHONPATH:<ABS_PATH_VENV_BASE_FOLDER>/lib/python3.10/site-packages
 ```
-to the end of `<ABS_PATH_VENV_BASE_FOLDER>/bin/activate` file or manually run it every time a package needs the custom library.
+to the end of `<ABS_PATH_VENV_BASE_FOLDER>/bin/activate` file or manually run it every time a terminal needs to run something which depends on the custom library.
 
 
 ### Build
