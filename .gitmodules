@@ -1,4 +1,4 @@
 [submodule "ros/Azure_Kinect_ROS_Driver"]
 	path = ros/Azure_Kinect_ROS_Driver
-	url = https://github.com/idsia-robotics/mutual_gaze_detector.git
+	url = https://github.com/idsia-robotics/Azure_Kinect_ROS_Driver.git
 	branch = arsimone
