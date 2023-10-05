@@ -1,0 +1,4 @@
+Ubuntu 22.04 LTS 
+Kernel Version: 6.1.0-1013-oem
+ROS2 Humble
+Python 3.10.12

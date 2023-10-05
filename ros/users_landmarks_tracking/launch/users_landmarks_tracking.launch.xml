@@ -1,0 +1,25 @@
+<launch>
+
+    <!-- args that can be set from the command line or a default will be used -->
+    <arg name="debug_node" default="false" />
+    <arg name="maximum_number_of_bodies" default="3" />
+    <arg name="draw_landmarks" default="true" />
+    <arg name="face_landmarks_extraction_version" default="simple" />
+    <arg name="rectified_image_input" default="false" />
+    
+    <node pkg="users_landmarks_tracking" exec="face_landmarks_node" name="face_landmarks_node" output="screen">
+        <param name="debug_node" value="$(var debug_node)"/>
+        <param name="maximum_number_of_bodies" value="$(var maximum_number_of_bodies)"/>
+        <param name="draw_landmarks" value="$(var draw_landmarks)"/>
+        <param name="face_landmarks_extraction_version" value="$(var face_landmarks_extraction_version)"/>
+        <param name="rectified_image_input" value="$(var rectified_image_input)"/>
+        <!-- <rosparam command="load" file="$(find users_landmarks_tracking)/config/face_landmarks.yaml" /> -->
+    </node>
+
+    <arg name="debug_imu_node" default="false" />
+
+    <include file="$(find-pkg-share users_landmarks_ros_utils)/launch/gravity_aligned_rgb_frame_publisher.launch.xml" >
+        <arg name="debug_node" value="$(var debug_imu_node)"/>
+    </include>
+
+</launch>

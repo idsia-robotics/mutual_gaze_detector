@@ -1,0 +1,10 @@
+<launch>
+
+    <!-- args that can be set from the command line or a default will be used -->
+    <arg name="debug_node" default="false" />
+
+    <node pkg="users_landmarks_ros_utils" exec="gravity_aligned_rgb_frame_publisher_node" name="gravity_aligned_rgb_frame_publisher_node" output="log">
+        <param name="debug_node" value="$(var debug_node)"/>
+    </node>
+
+</launch>

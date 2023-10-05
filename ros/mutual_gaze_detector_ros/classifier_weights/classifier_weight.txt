@@ -1,0 +1,1 @@
+The classifier weight to be used by the mutial gaze detector node should be placed here.

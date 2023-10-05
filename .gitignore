@@ -1,0 +1,10 @@
+# VS Code folders
+.vscode/
+
+# Python folders
+*.egg-info/
+build/
+
+# Pycache files
+*.pyc
+*.pyo

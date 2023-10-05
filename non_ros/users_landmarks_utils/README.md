@@ -1,0 +1,1 @@
+# Simple package to share utils useful for HRI

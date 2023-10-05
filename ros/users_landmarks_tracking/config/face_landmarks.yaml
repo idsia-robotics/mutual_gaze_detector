@@ -1,0 +1,8 @@
+face_landmarks_node:
+  ros__parameters:
+    debug_node: false
+    draw_landmarks: false
+
+    maximum_number_of_bodies: 3
+    face_landmarks_extraction_version: simple # simple or complex
+    

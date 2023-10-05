@@ -1,0 +1,4 @@
+[submodule "ros/Azure_Kinect_ROS_Driver"]
+	path = ros/Azure_Kinect_ROS_Driver
+	url = git@github.com:idsia-robotics/Azure_Kinect_ROS_Driver.git
+	branch = arsimone

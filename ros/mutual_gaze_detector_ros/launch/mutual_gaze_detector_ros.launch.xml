@@ -1,0 +1,10 @@
+<launch>
+
+    <!-- args that can be set from the command line or a default will be used -->
+    <arg name="debug_node" default="false" />
+    
+    <node pkg="mutual_gaze_detector_ros" exec="mutual_gaze_detector_node" name="mutual_gaze_detector_node" output="screen">
+        <param name="debug_node" value="$(var debug_node)"/>
+    </node>
+
+</launch>
