@@ -113,7 +113,7 @@ Then, run start the appropriate `compose` file:
 docker compose -f docker-compose-test.yaml up
 
 # Windows
-docker compose -f docker-compose-test-win.yaml up
+docker compose -f docker-compose-test-win.yml up
 ```
 
 If everything worked, you should see an `rqt` window where you should be able to select the appropriate topic to subscribe. Also, you should see a plot with the mututal gaze detector output.
