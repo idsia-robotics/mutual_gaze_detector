@@ -28,7 +28,6 @@ services:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
       - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
-
   gaze-detector:
     image: gabry993/mututal-gaze:test
     network_mode: host
