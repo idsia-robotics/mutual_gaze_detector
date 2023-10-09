@@ -39,7 +39,7 @@ class MutualGazeDetectorNode(rclpy.node.Node):
         
         # Parameters
         self.debug_node = self.get_parameter('debug_node').get_parameter_value().bool_value
-        self.threshold = self.get_parameter('threshold').get_parameter_value().float_value
+        self.threshold = self.get_parameter('threshold').get_parameter_value().double_value
 
         self.get_logger().info("debug_node: {}".format(self.debug_node))
 
