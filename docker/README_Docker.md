@@ -28,9 +28,11 @@ Of course, this setup requires an Azure Kinect camera.
 ### docker-compose
 The `docker-compose.yml` file available [here](docker-compose.yml) launches all the nodes required to run (I) data acquisition (i.e. Kinect driver); (II) data preprocessing and feature extraction; (III) mutual gaze detection.
 
-First, we need to pull the docker image. To do so, run:
+First, we need to pull the docker image. To do so, clone this repository and run:
 
 ```
+git clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
+cd mutual_gaze_detector/docker
 docker compose -f docker-compose.yml pull
 ```
 
@@ -49,7 +51,7 @@ If everything works correctly, one should be able to visualize a live plot of th
 ## Dockerfile_test
 This Dockerfile builds an image that allows testing and visualizing the detector on a recorded rosbag. The rosbag within the container already contains preprocessed data. In this way, this container does not have any hardware requirement, so we can easily visualize the mutual gaze detector on any PC.
 
-This container was tested on an Ubuntu 22.04 host machine running docker `20.10.7`. It was also tested on Windows 10 Enterprise 21H1 running `Docker Desktop 4.24.1` with `WSL 2` backend. We were not able to test on `macOS`.
+This container was tested on an Ubuntu 22.04 host machine running docker `24.0.2`. It was also tested on Windows 10 Enterprise 21H1 running `Docker Desktop 4.24.1` with `WSL 2` backend. We were not able to test on `macOS`.
 Here we report the steps needed to run the containers on both tested OS.
 
 ### docker-compose setup
@@ -61,7 +63,8 @@ Here we report the steps needed to run the containers on both tested OS.
   2. Clone this repository locally.
   3. Step into the `docker` folder of the repository and pull the container:
    ```
-   cd REPO_ROOT_FOLDER/docker
+   git clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
+   cd mutual_gaze_detector/docker
    docker compose -f docker-compose-test.yml pull
    ```
    
@@ -76,7 +79,8 @@ Here we report the steps needed to run the containers on both tested OS.
   4. Clone this repository locally.
   5. Step into the `docker` folder and then in each subfolder to pull the container for each component.
    ```
-   cd REPO_ROOT_FOLDER
+   git clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
+   cd mutual_gaze_detector
    cd docker
    docker compose -f docker-compose-test-win.yml pull
    ```
@@ -85,14 +89,17 @@ Here we report the steps needed to run the containers on both tested OS.
 
 
 ### Running the test
-First, we map a display within the container.
 
 <details>
   <summary>UBUNTU</summary>
 
-Simply run:
+First, we map a display within the container. Run:
 ```
 xhost +local:docker
+```
+Then, start the appropriate `compose` file:
+```
+docker compose -f docker-compose-test.yml up
 ```
 
 </details>
@@ -100,6 +107,7 @@ xhost +local:docker
 <details>
   <summary>WINDOWS</summary>
 
+First, we map a display within the container.
 1. Start XLaunch
 2. Leave default settings and press `Next` (Multiple windows, Display number -1)
 3. Leave default settings and press `Next` (Start no client)
@@ -109,10 +117,6 @@ xhost +local:docker
 
 Then, start the appropriate `compose` file:
 ```
-# Ubuntu
-docker compose -f docker-compose-test.yml up
-
-# Windows
 docker compose -f docker-compose-test-win.yml up
 ```
 
