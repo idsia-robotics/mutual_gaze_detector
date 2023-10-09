@@ -1,0 +1,76 @@
+FROM ros:humble
+MAINTAINER Gabriele Abbate "gabriele.abbate@idsia.ch"
+
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+ENV ROS_DISTRO=humble
+
+# install packages
+RUN apt-get update \
+    && apt-get install -q -y software-properties-common \
+    locales \
+    uuid-dev \
+    libsdl2-dev \
+    usbutils \
+    libusb-1.0-0-dev \
+    python3-pip \
+    curl \
+    alsa-base \
+    alsa-utils \
+    git \
+    curl \
+    python3-colcon-common-extensions \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen en_US.UTF-8
+SHELL ["/bin/bash", "-c"]
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# ros stuff for kinect
+RUN apt-get update \
+    && apt install python3-colcon-common-extensions -y \
+    dos2unix \
+    ros-humble-xacro \
+    ros-humble-launch-xml \
+    ros-humble-cv-bridge \
+    ros-humble-launch-testing-ament-cmake \
+    ros-humble-robot-state-publisher \
+    ros-humble-joint-state-publisher \
+    ros-humble-image-transport \
+    ros-humble-angles \
+    python3-pykdl \
+    ros-humble-tf-transformations \
+    ros-humble-rqt-image-view \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /ros_ws/src
+RUN git -C /ros_ws/src/ clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
+
+RUN python3 -m pip install pip -U
+RUN python3 -m pip install -U setuptools==62.1.0
+RUN python3 -m pip install -r /ros_ws/src/mutual_gaze_detector/config/requirements.txt
+RUN python3 -m pip install /ros_ws/src/mutual_gaze_detector/non_ros/users_landmarks_utils
+
+# setup entrypoint
+COPY ./ros_entrypoint.sh /
+# fix line ending when cloning from Windows
+RUN dos2unix -n /ros_entrypoint.sh /ros_entrypoint.sh
+
+RUN source /ros_entrypoint.sh \
+    && cd /ros_ws \
+    && colcon build \
+    && rm -r build log
+
+RUN source /ros_entrypoint.sh \
+    && cd /ros_ws \
+    && colcon build --symlink-install --packages-select users_landmarks_tracking mutual_gaze_detector_ros \
+    && rm -r build log
+
+RUN /bin/sed -i \
+  '/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/a source "\/ros_ws\/install\/setup.bash"' \
+  /ros_entrypoint.sh
+
+RUN rm -rf /kinect_tmp
+
+ENTRYPOINT ["/ros_entrypoint.sh"]

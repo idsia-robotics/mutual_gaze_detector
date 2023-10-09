@@ -5,13 +5,15 @@ services:
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=true rectify_images:=false imu_rate_target:=100
+    command: ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=false rectify_images:=false imu_rate_target:=100
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ./profile.xml:/profile.xml
     environment:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
 
   landmarks-pipeline:
     image: gabry993/mututal-gaze:full
@@ -21,6 +23,9 @@ services:
     command: ros2 launch users_landmarks_tracking users_landmarks_tracking.launch.xml rectified_image_input:=false debug_node:=true
     volumes:
       - ./logs:/root/.ros/log:rw
+      - ./profile.xml:/profile.xml
+    environment:
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
 
   gaze-detector:
     image: gabry993/mututal-gaze:full
@@ -31,7 +36,9 @@ services:
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ./profile.xml:/profile.xml
     environment:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
     

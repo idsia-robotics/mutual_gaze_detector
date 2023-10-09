@@ -1,0 +1,17 @@
+version: '3'
+services:
+  viewer:
+    image: gabry993/mututal-gaze:test
+    network_mode: host
+    pid: host
+    privileged: true
+    # command: ros2 run rqt_image_view rqt_image_view --ros-args -p topic:="/face_landmarks_node/full_landmarks_debug_image"
+    command: ros2 topic list
+    # /face_landmarks_node/full_landmarks_debug_image
+    volumes:
+      - ./logs:/root/.ros/log:rw
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+    

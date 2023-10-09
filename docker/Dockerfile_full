@@ -111,7 +111,6 @@ RUN dos2unix -n /ros_entrypoint.sh /ros_entrypoint.sh
 RUN source /ros_entrypoint.sh \
     && cd /ros_ws \
     && colcon build \
-    # && colcon build --packages-select azure_kinect_ros_msgs azure_kinect_ros_driver \
     && rm -r build log
 
 RUN source /ros_entrypoint.sh \
