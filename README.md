@@ -54,10 +54,11 @@ chmod +x ./src/mutual_gaze_detector/config/k4a_install_on_ubuntu_22_04.sh
 ./src/mutual_gaze_detector/config/k4a_install_on_ubuntu_22_04.sh
 ```
 
-You also need to install PyKDL dependencies with
+You also need to install PyKDL and tf_transformation dependencies with
 ```bash
 sudo apt-get update
-sudo apt-get -y install python3-pykdl
+sudo apt-get -y install python3-pykdl 
+sudo apt install ros-humble-tf-transformations
 ```
 
 #### Python environment
