@@ -49,7 +49,7 @@ If everything works correctly, one should be able to visualize a live plot of th
 ## Dockerfile_test
 This Dockerfile builds an image that allows to test and visualize the detector on a recorded rosbag. The rosbag within the container already contains preprocessed data. In this way, this container does not have any hardware requirement, so we can easily visualize the mutual gaze detector on any PC.
 
-This container was tested on Ubuntu 22.04 host machine running docker `20.10.7`. It was also tested on Windows 10 Enterprise 21H1 running `Docker Desktop 4.1.1` with `WSL 2` backend. We were not able to test on `macOS`.
+This container was tested on Ubuntu 22.04 host machine running docker `20.10.7`. It was also tested on Windows 10 Enterprise 21H1 running `Docker Desktop 4.24.1` with `WSL 2` backend. We were not able to test on `macOS`.
 Here we report the steps needed to run the containers on both tested OS.
 
 ### docker-compose setup
