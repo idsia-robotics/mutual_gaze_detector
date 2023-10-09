@@ -33,8 +33,8 @@ class MutualGazeDetectorNode(rclpy.node.Node):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('debug_node', False)
-                ('threshold', 0.5),
+                ('debug_node', False),
+                ('threshold', 0.5)
             ])
         
         # Parameters

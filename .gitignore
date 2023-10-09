@@ -11,3 +11,5 @@ build/
 
 
 docker/logs/
+
+docker/test_bag/
