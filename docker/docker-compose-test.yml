@@ -34,11 +34,12 @@ services:
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml threshold:=0.1
+    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml threshold:=1 debug_node:=false
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - ./profile.xml:/profile.xml
+      - ./mutual_gaze_detector_node.py:/ros_ws/install/mutual_gaze_detector_ros/lib/python3.10/site-packages/mutual_gaze_detector_ros/mutual_gaze_detector_node.py:rw
     environment:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
