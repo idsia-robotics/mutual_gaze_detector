@@ -1,0 +1,37 @@
+version: '3'
+services:
+  driver:
+    image: gabry993/mututal-gaze:full
+    network_mode: host
+    pid: host
+    privileged: true
+    command: ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=true rectify_images:=false imu_rate_target:=100
+    volumes:
+      - ./logs:/root/.ros/log:rw
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+
+  landmarks-pipeline:
+    image: gabry993/mututal-gaze:full
+    network_mode: host
+    pid: host
+    privileged: true
+    command: ros2 launch users_landmarks_tracking users_landmarks_tracking.launch.xml rectified_image_input:=false debug_node:=true
+    volumes:
+      - ./logs:/root/.ros/log:rw
+
+  gaze-detector:
+    image: gabry993/mututal-gaze:full
+    network_mode: host
+    pid: host
+    privileged: true
+    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml
+    volumes:
+      - ./logs:/root/.ros/log:rw
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+    
