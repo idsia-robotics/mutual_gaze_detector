@@ -8,3 +8,6 @@ build/
 # Pycache files
 *.pyc
 *.pyo
+
+
+docker/logs/
