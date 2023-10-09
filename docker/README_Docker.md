@@ -78,7 +78,7 @@ Here we report the steps needed to run the containers on both tested OS.
    ```
    cd REPO_ROOT_FOLDER
    cd docker
-   docker compose -f docker-compose-test-windows.yml pull
+   docker compose -f docker-compose-test-win.yml pull
    ```
    
 </details>
