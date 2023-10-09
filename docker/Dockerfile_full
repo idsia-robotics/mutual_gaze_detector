@@ -18,11 +18,8 @@ RUN apt-get update \
     alsa-base \
     alsa-utils \
     git \
+    curl \
     && add-apt-repository universe \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update \
-    && apt install curl -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
@@ -39,15 +36,10 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt install ros-humble-ros-base -y \
     && rm -rf /var/lib/apt/lists/*
 
-
-# setup entrypoint
-COPY ./ros_entrypoint.sh /
 RUN locale-gen en_US.UTF-8
 SHELL ["/bin/bash", "-c"]
 
-RUN source /ros_entrypoint.sh
-
-# kinect stuff
+# kinect stuff for microphone
 RUN sed -i 's+archive.ubuntu.com/ubuntu/ jammy universe+archive.ubuntu.com/ubuntu/ focal universe+' /etc/apt/sources.list
 RUN sed -i 's+archive.ubuntu.com/ubuntu/ jammy-updates universe+archive.ubuntu.com/ubuntu/ focal-updates universe+' /etc/apt/sources.list
 
@@ -59,6 +51,7 @@ RUN apt-get update && apt-get install -y \
 RUN sed -i 's+archive.ubuntu.com/ubuntu/ focal universe+archive.ubuntu.com/ubuntu/ jammy universe+' /etc/apt/sources.list
 RUN sed -i 's+archive.ubuntu.com/ubuntu/ focal-updates universe+archive.ubuntu.com/ubuntu/ jammy-updates universe+' /etc/apt/sources.list
 
+# install kinect executables
 RUN curl -L https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN echo "deb https://packages.microsoft.com/ubuntu/18.04/prod bionic main" >> /etc/apt/sources.list.d/archive_uri-https_packages_microsoft_com_ubuntu_18_04_prod-bionic.list
 
@@ -85,9 +78,10 @@ RUN dpkg -i /kinect_tmp/k4a-tools_1.4.1_amd64.deb
 COPY ./99-k4a.rules /etc/udev/rules.d/
 RUN chmod a+rwx /etc/udev/rules.d
 
+# ros stuff for kinect
 RUN apt-get update \
     && apt install python3-colcon-common-extensions -y \
-    python3-pykdl \
+    dos2unix \
     ros-humble-xacro \
     ros-humble-launch-xml \
     ros-humble-cv-bridge \
@@ -96,6 +90,7 @@ RUN apt-get update \
     ros-humble-joint-state-publisher \
     ros-humble-image-transport \
     ros-humble-angles \
+    python3-pykdl \
     ros-humble-tf-transformations \
     && rm -rf /var/lib/apt/lists/*
 
@@ -107,12 +102,17 @@ RUN python3 -m pip install -U setuptools==62.1.0
 RUN python3 -m pip install -r /ros_ws/src/mutual_gaze_detector/config/requirements.txt
 RUN python3 -m pip install /ros_ws/src/mutual_gaze_detector/non_ros/users_landmarks_utils
 
+
+# setup entrypoint
+COPY ./ros_entrypoint.sh /
+# fix line ending when cloning from Windows
+RUN dos2unix -n /ros_entrypoint.sh /ros_entrypoint.sh
+
 RUN source /ros_entrypoint.sh \
     && cd /ros_ws \
     && colcon build \
-    #--packages-select azure_kinect_ros_msgs azure_kinect_ros_driver \
+    # && colcon build --packages-select azure_kinect_ros_msgs azure_kinect_ros_driver \
     && rm -r build log
-
 
 RUN source /ros_entrypoint.sh \
     && cd /ros_ws \
@@ -122,5 +122,7 @@ RUN source /ros_entrypoint.sh \
 RUN /bin/sed -i \
   '/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/a source "\/ros_ws\/install\/setup.bash"' \
   /ros_entrypoint.sh
+
+RUN rm -rf /kinect_tmp
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
