@@ -44,6 +44,8 @@ RUN apt-get update \
     ros-humble-rqt-image-view \
     && rm -rf /var/lib/apt/lists/*
 
+COPY ./test_bag/ /test_bag
+
 RUN mkdir -p /ros_ws/src
 RUN git -C /ros_ws/src/ clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
 

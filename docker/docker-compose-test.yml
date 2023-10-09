@@ -1,17 +1,45 @@
 version: '3'
 services:
+  bag-player:
+    image: gabry993/mututal-gaze:test
+    network_mode: host
+    pid: host
+    privileged: true
+    command: ros2 bag play -l test_bag
+    volumes:
+      - ./logs:/root/.ros/log:rw
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ./profile.xml:/profile.xml
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
   viewer:
     image: gabry993/mututal-gaze:test
     network_mode: host
     pid: host
     privileged: true
-    # command: ros2 run rqt_image_view rqt_image_view --ros-args -p topic:="/face_landmarks_node/full_landmarks_debug_image"
-    command: ros2 topic list
-    # /face_landmarks_node/full_landmarks_debug_image
+    command: ros2 run rqt_image_view rqt_image_view --ros-args -p topic:="/face_landmarks_node/full_landmarks_debug_image"
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ./profile.xml:/profile.xml
     environment:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
-    
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
+
+  gaze-detector:
+    image: gabry993/mututal-gaze:test
+    network_mode: host
+    pid: host
+    privileged: true
+    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml threshold:=0.1
+    volumes:
+      - ./logs:/root/.ros/log:rw
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ./profile.xml:/profile.xml
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"

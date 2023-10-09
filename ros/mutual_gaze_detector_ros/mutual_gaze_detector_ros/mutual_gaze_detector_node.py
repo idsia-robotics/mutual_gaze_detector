@@ -34,10 +34,13 @@ class MutualGazeDetectorNode(rclpy.node.Node):
             namespace='',
             parameters=[
                 ('debug_node', False)
+                ('threshold', 0.5),
             ])
         
         # Parameters
         self.debug_node = self.get_parameter('debug_node').get_parameter_value().bool_value
+        self.threshold = self.get_parameter('threshold').get_parameter_value().value
+
         self.get_logger().info("debug_node: {}".format(self.debug_node))
 
         qos = rclpy.qos.QoSProfile(
@@ -121,7 +124,7 @@ class MutualGazeDetectorNode(rclpy.node.Node):
         # Run classifier
         are_looking_probabilities = self.run_classifier(users_features_dataframe)
         are_looking = False
-        if are_looking_probabilities[0][1] > are_looking_probabilities[0][0]:
+        if are_looking_probabilities[0][1] > self.threshold:
             are_looking = True             
         
         self.true_probability = np.roll(self.true_probability, -1)

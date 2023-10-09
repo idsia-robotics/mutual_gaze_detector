@@ -14,6 +14,13 @@ services:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
       - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
+    deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
 
   landmarks-pipeline:
     image: gabry993/mututal-gaze:full
