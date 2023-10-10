@@ -5,7 +5,7 @@ This repository contains a ROS2 implementation of a mutual gaze detector designe
 
 
 
-https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/5da35997-f858-4701-bb1b-bdcfa1a3525f
+https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/372adf6f-de04-4dd7-a280-04f62c6c5fb3
 
 
 
