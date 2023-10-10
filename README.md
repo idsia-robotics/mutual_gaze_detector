@@ -3,6 +3,10 @@ Mutual Gaze Detector
 
 This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications.
 
+https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/e95dc618-c3be-4af8-9e8e-b94049df0757
+
+
+
 ## Installation
 
 We provide both instructions to install everything from scratch and docker containers to simplify the setup.
