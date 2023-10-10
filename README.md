@@ -7,7 +7,7 @@ This repository contains a ROS2 implementation of a mutual gaze detector designe
 
 We provide both instructions to install everything from scratch and docker containers to simplify the setup.
 
-The documentation for the docker part can be found [here](docker/README_Docker.md).
+The documentation for the docker part can be found [here](docker/README.md).
 Note that one of the container has been created to test the mutual gaze detector on a pre-recorded rosbag file.
 In this way, one can see the detector at work without any hardware requirement (e.g. Azure Kinect Camera and GPU).
 
