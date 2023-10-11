@@ -1,7 +1,7 @@
 version: '3'
 services:
   driver:
-    image: gabry993/mututal-gaze:full
+    image: gabry993/mutual-gaze:full
     network_mode: host
     pid: host
     privileged: true
@@ -23,7 +23,7 @@ services:
                 capabilities: [gpu]
 
   landmarks-pipeline:
-    image: gabry993/mututal-gaze:full
+    image: gabry993/mutual-gaze:full
     network_mode: host
     pid: host
     privileged: true
@@ -35,11 +35,11 @@ services:
       - "FASTRTPS_DEFAULT_PROFILES_FILE=/profile.xml"
 
   gaze-detector:
-    image: gabry993/mututal-gaze:full
+    image: gabry993/mutual-gaze:full
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector.launch.xml
+    command: ros2 launch mutual_gaze_detector mutual_gaze_detector.launch.xml debug_node:=true
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"

@@ -45,8 +45,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /ros_ws/src
-RUN git -C /ros_ws/src/ clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
+RUN git -C /ros_ws/src/ clone --recursive --remote -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
 
+RUN ls /ros_ws/src
 RUN python3 -m pip install pip -U
 RUN python3 -m pip install -U setuptools==62.1.0
 RUN python3 -m pip install -r /ros_ws/src/mutual_gaze_detector/config/requirements.txt
@@ -54,12 +55,13 @@ RUN python3 -m pip install /ros_ws/src/mutual_gaze_detector/non_ros/users_landma
 
 # setup entrypoint
 COPY ./ros_entrypoint.sh /
+
 # fix line ending when cloning from Windows
 RUN dos2unix -n /ros_entrypoint.sh /ros_entrypoint.sh
 
 RUN source /ros_entrypoint.sh \
     && cd /ros_ws \
-    && colcon build \
+    && colcon build --packages-skip azure_kinect_ros_driver \
     && rm -r build log
 
 RUN source /ros_entrypoint.sh \

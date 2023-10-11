@@ -131,7 +131,7 @@ class MutualGazeDetectorNode(rclpy.node.Node):
         out_msg.header = users_landmarks_msg.header
         out_msg.body_ids = [user.body_id for user in users_landmarks_msg.users]
         out_msg.output = [proba for proba in are_looking_probabilities[:, 1]]
-        out_msg.mutual_gaze = [proba > self.threshold for proba in are_looking_probabilities[:, 1]]
+        out_msg.mutual_gaze = [bool(proba > self.threshold) for proba in are_looking_probabilities[:, 1]]
 
         self.output_pub.publish(out_msg)
 
