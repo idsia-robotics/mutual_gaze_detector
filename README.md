@@ -105,7 +105,7 @@ when in the base folder of the ROS2 workspace.
 
 In order to build the custom packages for mutual gaze detection use 
 ```bash
-colcon build --symlink-install --packages-select users_landmarks_tracking mutual_gaze_detector_ros
+colcon build --symlink-install --packages-select users_landmarks_tracking mutual_gaze_detector
 ```
 when in the base folder of the ROS2 workspace.
 
@@ -120,7 +120,7 @@ when in the base folder of the ROS2 workspace.
 
 In the first launch the sensor driver using
 ```bash
-ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=true rectify_images:=false imu_rate_target:=100
+ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=false rectify_images:=false imu_rate_target:=100
 ```
 
 In the second launch the face landmarks processing pipeline with 
