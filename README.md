@@ -8,6 +8,8 @@ This repository contains a ROS2 implementation of a mutual gaze detector designe
 https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/372adf6f-de04-4dd7-a280-04f62c6c5fb3
 
 
+[![Pointing  at  Moving  Robots:  Detecting  Events  from  Wrist  IMU  Data](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme.gif)](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme.mp4)
+
 
 ## Installation
 
