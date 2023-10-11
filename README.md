@@ -11,6 +11,7 @@ https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/372adf6f-
 
 ## Installation
 
+### Docker
 We provide both instructions to install everything from scratch and docker containers to simplify the setup.
 
 The documentation for the docker part can be found [here](docker/README.md).
