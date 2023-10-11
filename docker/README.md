@@ -125,6 +125,4 @@ If everything works, you should see a `rqt` window where you should be able to s
 After resizing both windows, you should see a video played in a loop, like the one below.
 
 
-https://github.com/idsia-robotics/mutual_gaze_detector/assets/20441485/ec09b263-4cef-4d7d-99db-004c0bfb2ccf
-
-
+[![Mutual Gaze Detector test from docker](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme_docker.gif)](https://raw.githubusercontent.com/idsia-robotics/mutual_gaze_detector/hri/assets/readme_docker.mp4)
