@@ -64,7 +64,7 @@ RUN source /ros_entrypoint.sh \
 
 RUN source /ros_entrypoint.sh \
     && cd /ros_ws \
-    && colcon build --symlink-install --packages-select users_landmarks_tracking mutual_gaze_detector_ros \
+    && colcon build --symlink-install --packages-select users_landmarks_tracking mutual_gaze_detector \
     && rm -r build log
 
 RUN /bin/sed -i \

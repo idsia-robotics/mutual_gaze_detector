@@ -19,7 +19,7 @@ services:
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 run rqt_image_view rqt_image_view --ros-args -p topic:="/face_landmarks_node/full_landmarks_debug_image"
+    command: ros2 run rqt_image_view rqt_image_view /face_landmarks_node/full_landmarks_debug_image
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
@@ -33,7 +33,7 @@ services:
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml threshold:=0.4
+    command: ros2 launch mutual_gaze_detector mutual_gaze_detector_ros.launch.xml threshold:=0.4 debug_node:=true
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"

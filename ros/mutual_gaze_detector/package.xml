@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>mutual_gaze_detector_ros</name>
+  <name>mutual_gaze_detector</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="simone.arreghini@supsi.ch">Simone Arreghini</maintainer>
@@ -17,6 +17,7 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>users_landmarks_msgs</exec_depend>
+  <exec_depend>mutual_gaze_detector_msgs</exec_depend>
 
   <exec_depend>cv_bridge</exec_depend>  
 

@@ -39,7 +39,7 @@ services:
     network_mode: host
     pid: host
     privileged: true
-    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml
+    command: ros2 launch mutual_gaze_detector_ros mutual_gaze_detector.launch.xml
     volumes:
       - ./logs:/root/.ros/log:rw
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"

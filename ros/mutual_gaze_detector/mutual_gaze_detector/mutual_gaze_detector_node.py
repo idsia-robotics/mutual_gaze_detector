@@ -14,6 +14,7 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Point, Pose, TransformStamped, Quaternion, PoseArray, Transform
 from sensor_msgs.msg import Image, CameraInfo
 from users_landmarks_msgs.msg import MultipleUsersLandmarks, SingleUserLandmarks
+from mutual_gaze_detector_msgs.msg import MutualGazeOutput
 
 import cv2
 import joblib
@@ -43,6 +44,8 @@ class MutualGazeDetectorNode(rclpy.node.Node):
 
         self.get_logger().info("debug_node: {}".format(self.debug_node))
 
+        self.output_pub = self.create_publisher(MutualGazeOutput, "/mutual_gaze_output", 10)
+
         qos = rclpy.qos.QoSProfile(
             depth=1,
         )
@@ -52,7 +55,7 @@ class MutualGazeDetectorNode(rclpy.node.Node):
                                                                      "/face_landmarks_node/users_landmarks", 
                                                                      self.users_landmarks_callback,
                                                                      qos_profile=qos)
-        classifier_weights_path = os.path.join(get_package_share_directory("mutual_gaze_detector_ros"),
+        classifier_weights_path = os.path.join(get_package_share_directory("mutual_gaze_detector"),
                                                "classifier_weights",
                                                "mutual_gaze_classifier_random_forest_weights.joblib")
                 
@@ -123,41 +126,50 @@ class MutualGazeDetectorNode(rclpy.node.Node):
             return
         # Run classifier
         are_looking_probabilities = self.run_classifier(users_features_dataframe)
-        are_looking = False
-        if are_looking_probabilities[0][1] > self.threshold:
-            are_looking = True             
         
-        self.true_probability = np.roll(self.true_probability, -1)
-        self.true_probability[-1] = are_looking_probabilities[0][1]
-        
-        # Visualize results
-        self.get_logger().info(f"User are looking: {are_looking} with probability: {are_looking_probabilities[0]}")
-        
-        text = f'{self.true_probability[-1]:.3f}'
-        feedback_image = np.ones((200, 200, 3), dtype=np.uint8)
-        if are_looking:
-            feedback_image[:, :, 1] = 255
-        else:
-            feedback_image[:, :, 2] = 255
-               
-        cv2.putText(img = feedback_image, 
-                    text = text,
-                    org = (55, 25), 
-                    fontFace = cv2.FONT_HERSHEY_SIMPLEX, 
-                    fontScale = 1, 
-                    thickness = 1, 
-                    color = (0, 0, 0))
-        
-        plot_image = np.ones((200, 200, 3), dtype=np.uint8) * 255
-        
-        cv2.line(plot_image, (0, 100), (200, 100), (0, 0, 255), 1)
-        
-        x = np.linspace(0, 200, 50)
-        points = np.column_stack((x.astype(int), 200 -(self.true_probability*200).astype(int)))
-        cv2.polylines(plot_image, [points], isClosed=False, color=(255, 0, 0), thickness=1)
-        
-        cv2.imshow(self.gui_window_name, cv2.vconcat([plot_image, feedback_image]))
-        cv2.waitKey(1)
+        out_msg = MutualGazeOutput()
+        out_msg.header = users_landmarks_msg.header
+        out_msg.body_ids = [user.body_id for user in users_landmarks_msg.users]
+        out_msg.output = [proba for proba in are_looking_probabilities[:, 1]]
+        out_msg.mutual_gaze = [proba > self.threshold for proba in are_looking_probabilities[:, 1]]
+
+        self.output_pub.publish(out_msg)
+
+        if self.debug_node:
+            # Visualize debug results for one user
+            are_looking = False
+            if are_looking_probabilities[0][1] > self.threshold:
+                are_looking = True             
+            self.true_probability = np.roll(self.true_probability, -1)
+            self.true_probability[-1] = are_looking_probabilities[0][1]
+
+            self.get_logger().info(f"User are looking: {are_looking} with probability: {are_looking_probabilities[0]}")
+            
+            text = f'{self.true_probability[-1]:.3f}'
+            feedback_image = np.ones((200, 200, 3), dtype=np.uint8)
+            if are_looking:
+                feedback_image[:, :, 1] = 255
+            else:
+                feedback_image[:, :, 2] = 255
+                   
+            cv2.putText(img = feedback_image, 
+                        text = text,
+                        org = (55, 25), 
+                        fontFace = cv2.FONT_HERSHEY_SIMPLEX, 
+                        fontScale = 1, 
+                        thickness = 1, 
+                        color = (0, 0, 0))
+            
+            plot_image = np.ones((200, 200, 3), dtype=np.uint8) * 255
+            
+            cv2.line(plot_image, (0, 100), (200, 100), (0, 0, 255), 1)
+            
+            x = np.linspace(0, 200, 50)
+            points = np.column_stack((x.astype(int), 200 -(self.true_probability*200).astype(int)))
+            cv2.polylines(plot_image, [points], isClosed=False, color=(255, 0, 0), thickness=1)
+            
+            cv2.imshow(self.gui_window_name, cv2.vconcat([plot_image, feedback_image]))
+            cv2.waitKey(1)
         
 def main(args=None):
     rclpy.init(args=args)

@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = 'mutual_gaze_detector_ros'
+package_name = 'mutual_gaze_detector'
 
 setup(
     name=package_name,
@@ -24,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'mutual_gaze_detector_node = mutual_gaze_detector_ros.mutual_gaze_detector_node:main',
+            'mutual_gaze_detector_node = mutual_gaze_detector.mutual_gaze_detector_node:main',
         ],
     },
 )
