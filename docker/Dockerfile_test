@@ -75,6 +75,6 @@ RUN /bin/sed -i \
 
 RUN rm -rf /kinect_tmp
 
-COPY ./test_bag/ /test_bag
+#COPY ./test_bag/ /test_bag
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
