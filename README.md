@@ -1,31 +1,39 @@
 Mutual Gaze Detector
 ==============
 
-This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications.
+This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications which requires reasonable tracking up 5 meters.
 
 [![Mutual Gaze Detector at Work](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme.gif)](https://raw.githubusercontent.com/idsia-robotics/mutual_gaze_detector/hri/assets/readme.mp4)
 
 
 ## Installation
 
-### Docker
-We provide both instructions to install everything from scratch and docker containers to simplify the setup.
+We provide two ways of installation: from scratch on native Ubuntu or two Docker images to simplify the setup procedure. One image can be used to create a container for running the demo and the other is instead already set up to run the full pipeline provided that the right hardware is available.
 
-The documentation for the docker part can be found [here](docker/README.md).
-Note that one of the container has been created to test the mutual gaze detector on a pre-recorded rosbag file.
+### Docker
+
+[Here](docker/README.md) is reported a detailed documentation for the Docker part which contains instruction to run both a container for the whole pipeline as well as the quick demo.
+
+#### Docker Requirements
+The Docker setup has been tested with two different OS:
+* Windows, by using Windows Subsystem for Linux (WSL2)
+* Ubuntu 22.04 LTS
+
+#### Docker Demo
+As previously said one of the container has been created to test the mutual gaze detector on a pre-recorded rosbag file.
 In this way, one can see the detector at work without any hardware requirement (e.g. Azure Kinect Camera and GPU).
 
-### Pre-requisites
+### Native installation
 
-#### Host
+#### Host Pre-Requisites
 
-The code in this repository has been tested with a machine running:
+The code in this repository has been developed and tested with a machine running:
 * Ubuntu 22.04 LTS 
 * Kernel Version: 6.1.0-1013-oem
 * ROS2 Humble
 * Python 3.10.12
 
-#### ROS2
+#### ROS2 General Installation
 
 Install Humble desktop full version of ROS2, following the [official instructions](https://docs.ros.org/en/humble/Installation.html).
 and then install colcon  
@@ -34,7 +42,7 @@ sudo apt update
 sudo apt install python3-colcon-common-extensions
 ```
 
-### Setup
+#### ROS2 Workspace Setup
 
 Create a ROS2 workspace and clone this repo with
 ```bash
@@ -51,7 +59,7 @@ source /opt/ros/humble/setup.bash
 
 All the next instruction assumes you have a terminal opened in the base folder of the ROS2 workspace.
 
-#### Additional dependencies
+###### Additional dependencies
 Install Azure Kinect SDK by using the script in `config/k4a_install_on_ubuntu_22_04.sh` relative path with this repo with 
 ```bash
 chmod +x ./src/mutual_gaze_detector/config/k4a_install_on_ubuntu_22_04.sh
@@ -88,9 +96,9 @@ PYTHONPATH=$PYTHONPATH:<ABS_PATH_VENV_BASE_FOLDER>/lib/python3.10/site-packages
 to the end of `<ABS_PATH_VENV_BASE_FOLDER>/bin/activate` file or manually run it every time a terminal needs to run something which depends on the custom library.
 
 
-### Build
+## Build
 
-#### Building Azure Kinect ROS driver
+### Building Azure Kinect ROS driver
 
 In order to build the ROS drivers for the Azure Kinect use 
 ```bash
@@ -98,7 +106,7 @@ colcon build
 ```
 when in the base folder of the ROS2 workspace.
 
-#### Mutual gaze detector packages
+### Mutual gaze detector packages
 
 In order to build the custom packages for mutual gaze detection use 
 ```bash
@@ -106,7 +114,7 @@ colcon build --symlink-install --packages-select users_landmarks_tracking mutual
 ```
 when in the base folder of the ROS2 workspace.
 
-### Use
+## Code Usage
 
 To use the packages open three terminal and run in each of them
 ```bash
@@ -136,3 +144,15 @@ Optionally the use can visualize the camera stream images with superimposed land
 rqt
 ```
 by using `Plugin/Visualization/Image View` plugin and then, in the top down menu, selecting the `/face_landmarks_node/full_landmarks_debug_image` topic.
+
+## Remarks on Code Deployment
+
+The pre-processing stage in this pipeline is designed to generate meaningful data to be used in downstream tasks, while making them anonymous. This is achieved by using human joints pose tracking and facial landmarks tracking instead of raw RGB images. This should facilitate acceptance of this solution by ethical commitees even in case data needs to be saved. 
+
+## Maintenance
+
+Please note that while this release provides the current version of the code utilized in the referenced paper, ongoing development might come at a later stage, as well as bug fixes, and updates to the documentation.Feedback and contributions are appreciated to shape the future iterations of this code.
+
+## License
+
+The code in this repository is released under the MIT License. This grants users the freedom to utilize, modify, and distribute the code, subject to the terms outlined in the MIT License agreement. We encourage collaboration and innovation, welcoming contributions and adaptations while ensuring the code's accessibility and continued evolution within the guidelines of this license.

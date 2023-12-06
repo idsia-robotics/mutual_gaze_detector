@@ -1,25 +1,23 @@
 Mutual Gaze Detector - Docker
 ==============
 
-## About
-
-All the relevant files can be found in the `docker` folder.
+## Description
 We provide Dockerfiles for 2 separate images:
 * [Dockerfile_full](#dockerfile_full): builds an image that allows one to replicate our entire setup and run our code
 * [Dockerfile_test](#dockerfile_test): builds an image that allows to test and visualize the detector on a recorded rosbag
 
 We release the Dockerfiles for convenience, but images are available to be pulled from docker repository. The `docker-compose` files are already configured to pull these containers, so  there is no need to build the images from the Dockerfiles.
 
-
 ## Dockerfile_full
 
-This Dockerfile builds an image that allows one to replicate our entire setup and run our code. In particular, it will install the Azure Kinect ROS driver and the rest of our code.
+This Dockerfile builds an image that allows one to replicate our setup and run our entire pipeline. In particular, it will install the Azure Kinect ROS driver and the rest of our code.
 
 ### Requirements
-This image has been tested successfully only on Ubuntu 22.02. We could not test it on Windows since there is no easy way, at the time of writing, to make the Kinect available in a docker container from a Windows host.
+This image has been tested successfully only on Ubuntu 22.04. We could not test it on Windows since there is no straightforward way, at the time of writing, to make the Azure Kinect available from within a Docker container running on a Windows host.
 
-The body tracking of the Azure Kinect requires a GPU to work properly. Check the [kinect requirements](https://learn.microsoft.com/en-us/azure/kinect-dk/system-requirements).
-So, a GPU and a docker installation supporting CUDAs are required. We tested it following [this guide](https://linuxhint.com/use-nvidia-gpu-docker-containers-ubuntu-22-04-lts/).
+The body joints tracking of the Azure Kinect requires a GPU to work properly. Check the [Azure Kinect requirements](https://learn.microsoft.com/en-us/azure/kinect-dk/system-requirements).
+So, a GPU and a docker installation supporting CUDAs are considered as requirements. 
+We tested it following [this guide](https://linuxhint.com/use-nvidia-gpu-docker-containers-ubuntu-22-04-lts/).
 
 Finally, [docker compose](https://docs.docker.com/compose/install/) must be installed to easily run our code.
 
@@ -28,7 +26,7 @@ Of course, this setup requires an Azure Kinect camera.
 ### docker-compose
 The `docker-compose.yml` file available [here](docker-compose.yml) launches all the nodes required to run (I) data acquisition (i.e. Kinect driver); (II) data preprocessing and feature extraction; (III) mutual gaze detection.
 
-First, we need to pull the docker image. To do so, clone this repository and run:
+First, we need to pull the Docker image. To do so, clone this repository and run:
 
 ```
 git clone -b hri https://github.com/idsia-robotics/mutual_gaze_detector.git
@@ -113,12 +111,13 @@ First, we map a display within the container.
 3. Leave default settings and press `Next` (Start no client)
 4. Remove the flag from `Native opengl` and press `Next`
 5. Press `Finish`
-</details>
 
 Then, start the appropriate `compose` file:
 ```
 docker compose -f docker-compose-test-win.yml up
 ```
+
+</details>
 
 If everything works, you should see a `rqt` window where you should be able to select the appropriate topic to subscribe to. Also, you should see a plot with the mutual gaze detector output.
 
