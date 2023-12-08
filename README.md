@@ -7,7 +7,7 @@ This repository contains a ROS2 implementation of a mutual gaze detector designe
 
 We provide two ways of installation: from scratch on native Ubuntu 22.04 or Docker images to simplify the setup procedure.
 
-## General System Hardware Requirements
+## System Hardware Requirements
 The execution of the code contained in this repository has the following hardware requirements:
 * Seventh Gen Intel® CoreTM i5 Processor (Quad Core 2.4 GHz or faster)
 * Nvidia GPU (NVIDIA GEFORCE GTX 1050 or above)
@@ -31,11 +31,11 @@ For this second setup, the host has the requirement to run a Linux distro. This 
 
 ### Host System Software Requirements
 The code in this repository has been developed and tested with a machine running:
-* Ubuntu 22.04 LTS 
-* Kernel Version: 6.1.0-1013-oem
+* Ubuntu 22.04 LTS (Kernel Version: 6.1.0-1013-oem)
 * ROS2 Humble
 * Python 3.10.12
-Therefore these are considered to be the software requirements.
+  
+Therefore these are to be considered the software requirements. The kernel version is provided only for reference, the specific number is not mandatory as it should not hinder the code execution.
 
 ### Installation Guide
 #### ROS2 General Installation
