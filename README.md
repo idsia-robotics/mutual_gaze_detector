@@ -5,34 +5,39 @@ This repository contains a ROS2 implementation of a mutual gaze detector designe
 
 [![Mutual Gaze Detector at Work](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme.gif)](https://raw.githubusercontent.com/idsia-robotics/mutual_gaze_detector/hri/assets/readme.mp4)
 
+We provide two ways of installation: from scratch on native Ubuntu 22.04 or Docker images to simplify the setup procedure.
 
-## Installation
+## General System Hardware Requirements
+The execution of the code contained in this repository has the following hardware requirements:
+* Seventh Gen Intel® CoreTM i5 Processor (Quad Core 2.4 GHz or faster)
+* Nvidia GPU (NVIDIA GEFORCE GTX 1050 or above)
 
-We provide two ways of installation: from scratch on native Ubuntu or two Docker images to simplify the setup procedure. One image can be used to create a container for running the demo and the other is instead already set up to run the full pipeline provided that the right hardware is available.
+These requirements are inherited by the [Azure Kinect sensor SDK system requirements](https://learn.microsoft.com/en-us/azure/kinect-dk/system-requirements).
 
-### Docker
+## Dockerized Solutions
+Two distinct Docker images are released. The first image can be used to create a container for running a demo to test the mutual gaze detector on a pre-recorded rosbag file.
 
-[Here](docker/README.md) is reported a detailed documentation for the Docker part which contains instruction to run both a container for the whole pipeline as well as the quick demo.
-
-#### Docker Requirements
-The Docker setup has been tested with two different OS:
+This Demo Docker setup has been tested with two different OS:
 * Windows, by using Windows Subsystem for Linux (WSL2)
 * Ubuntu 22.04 LTS
+This image allows to display the capabilities of the software without needing specific hardware requirement (e.g. Azure Kinect Camera and GPU) as the body tracking is not running online.
 
-#### Docker Demo
-As previously said one of the container has been created to test the mutual gaze detector on a pre-recorded rosbag file.
-In this way, one can see the detector at work without any hardware requirement (e.g. Azure Kinect Camera and GPU).
+The second one is instead already set up to run the full pipeline provided that the right hardware is available.
+For this second setup, the host has the requirement to run a Linux distro. This is due to some known issues in Windows in the connection to a Azure Kinect from a process running inside a Docker container.
 
-### Native installation
+[Here](docker/README.md) is reported a more detailed and comprehensive documentation for the Docker part.
 
-#### Host Pre-Requisites
+## Native Installation
 
+### Host System Software Requirements
 The code in this repository has been developed and tested with a machine running:
 * Ubuntu 22.04 LTS 
 * Kernel Version: 6.1.0-1013-oem
 * ROS2 Humble
 * Python 3.10.12
+Therefore these are considered to be the software requirements.
 
+### Installation Guide
 #### ROS2 General Installation
 
 Install Humble desktop full version of ROS2, following the [official instructions](https://docs.ros.org/en/humble/Installation.html).
@@ -96,9 +101,9 @@ PYTHONPATH=$PYTHONPATH:<ABS_PATH_VENV_BASE_FOLDER>/lib/python3.10/site-packages
 to the end of `<ABS_PATH_VENV_BASE_FOLDER>/bin/activate` file or manually run it every time a terminal needs to run something which depends on the custom library.
 
 
-## Build
+### Build
 
-### Building Azure Kinect ROS driver
+#### Building Azure Kinect ROS driver
 
 In order to build the ROS drivers for the Azure Kinect use 
 ```bash
@@ -106,7 +111,7 @@ colcon build
 ```
 when in the base folder of the ROS2 workspace.
 
-### Mutual gaze detector packages
+#### Mutual gaze detector packages
 
 In order to build the custom packages for mutual gaze detection use 
 ```bash
@@ -115,7 +120,6 @@ colcon build --symlink-install --packages-select users_landmarks_tracking mutual
 when in the base folder of the ROS2 workspace.
 
 ## Code Usage
-
 To use the packages open three terminal and run in each of them
 ```bash
 source install/setup.bash
@@ -144,6 +148,9 @@ Optionally the use can visualize the camera stream images with superimposed land
 rqt
 ```
 by using `Plugin/Visualization/Image View` plugin and then, in the top down menu, selecting the `/face_landmarks_node/full_landmarks_debug_image` topic.
+
+## Demo
+Please refer to the [Docker solution documentation](docker/README.md) and in particular to the Dockerfile_test part to read how run a demonstration of the code.  
 
 ## Remarks on Code Deployment
 

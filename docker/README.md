@@ -12,17 +12,6 @@ We release the Dockerfiles for convenience, but images are available to be pulle
 
 This Dockerfile builds an image that allows one to replicate our setup and run our entire pipeline. In particular, it will install the Azure Kinect ROS driver and the rest of our code.
 
-### Requirements
-This image has been tested successfully only on Ubuntu 22.04. We could not test it on Windows since there is no straightforward way, at the time of writing, to make the Azure Kinect available from within a Docker container running on a Windows host.
-
-The body joints tracking of the Azure Kinect requires a GPU to work properly. Check the [Azure Kinect requirements](https://learn.microsoft.com/en-us/azure/kinect-dk/system-requirements).
-So, a GPU and a docker installation supporting CUDAs are considered as requirements. 
-We tested it following [this guide](https://linuxhint.com/use-nvidia-gpu-docker-containers-ubuntu-22-04-lts/).
-
-Finally, [docker compose](https://docs.docker.com/compose/install/) must be installed to easily run our code.
-
-Of course, this setup requires an Azure Kinect camera.
-
 ### docker-compose
 The `docker-compose.yml` file available [here](docker-compose.yml) launches all the nodes required to run (I) data acquisition (i.e. Kinect driver); (II) data preprocessing and feature extraction; (III) mutual gaze detection.
 
