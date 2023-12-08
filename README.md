@@ -119,29 +119,32 @@ colcon build --symlink-install --packages-select users_landmarks_tracking mutual
 ```
 when in the base folder of the ROS2 workspace.
 
-## Code Usage
-To use the packages open three terminal and run in each of them
+### Code Usage
+Once all the pre-requisites are installed and the ROS2 packages built. Running the whole pipeline comes down to launching three different groups of nodes.
+Firstly open three terminal and run in each of them
 ```bash
 source install/setup.bash
 source <ABS_PATH_VENV_BASE_FOLDER>/bin/activate
 ```
-when in the base folder of the ROS2 workspace.
+from the base folder of the ROS2 workspace.
 
-In the first launch the sensor driver using
+In the first terminal launch the sensor driver node (camera drivers together with body tracking) using
 ```bash
 ros2 launch azure_kinect_ros_driver driver.launch.py depth_mode:=NFOV_UNBINNED color_resolution:=3072P fps:=15 body_tracking_enabled:=true body_tracking_cpu:=false rectify_images:=false imu_rate_target:=100
 ```
 
-In the second launch the face landmarks processing pipeline with 
+In the second terminal launch the pre-processing pipeline nodes (face landmarks and gravity aligning nodes) with 
 ```bash
 ros2 launch users_landmarks_tracking users_landmarks_tracking.launch.xml rectified_image_input:=false debug_node:=true
 ```
 
-In the last launch the actual mutual gaze detector node with 
+In the last terminal launch the actual mutual gaze detector node with 
 ```bash
 ros2 launch mutual_gaze_detector_ros mutual_gaze_detector_ros.launch.xml
 ```
 this last command will cause an OpenCV GUI to open where you will be able to see on top a simple plot of the predicted mutual gaze probability history for the first tracked user. On the bottom there will be the actual value of the probability in a color changing box. The box will be green if the probability exceed the set threshold of 0.5 and red if down not.    
+
+The mutual gaze detector node also publish the output of the detector on a ROS2 topic called "/mutual_gaze_output" to be further used in downstream applications. The message publish is of the custom type [MutualGazeOutput](ros/mutual_gaze_detector_msgs/msg/MutualGazeOutput.msg).
 
 Optionally the use can visualize the camera stream images with superimposed landmarks by using RQT gui with 
 ```bash
@@ -150,7 +153,7 @@ rqt
 by using `Plugin/Visualization/Image View` plugin and then, in the top down menu, selecting the `/face_landmarks_node/full_landmarks_debug_image` topic.
 
 ## Demo
-Please refer to the [Docker solution documentation](docker/README.md) and in particular to the Dockerfile_test part to read how run a demonstration of the code.  
+Please refer to the [Docker solution documentation](docker/README.md) and in particular to the Dockerfile_test part to read how run a demonstration of the code. 
 
 ## Remarks on Code Deployment
 
