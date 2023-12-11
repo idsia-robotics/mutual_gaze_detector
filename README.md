@@ -20,6 +20,7 @@ Two distinct Docker images are released. The first image can be used to create a
 This Demo Docker setup has been tested with two different OS:
 * Windows, by using Windows Subsystem for Linux (WSL2)
 * Ubuntu 22.04 LTS
+
 This image allows to display the capabilities of the software without needing specific hardware requirement (e.g. Azure Kinect Camera and GPU) as the body tracking is not running online.
 
 The second one is instead already set up to run the full pipeline provided that the right hardware is available.
