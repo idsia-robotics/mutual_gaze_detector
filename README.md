@@ -37,6 +37,7 @@ The code in this repository has been developed and tested with a machine running
 * Python 3.10.12
   
 Therefore these are to be considered the software requirements. The kernel version is provided only for reference, the specific number is not mandatory as it should not hinder the code execution.
+The hard requirement for the host operating system is due to the unavailability of an Azure Kinect ROS Driver package running on native Windows.
 
 ### Installation Guide
 #### ROS2 General Installation
