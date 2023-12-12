@@ -155,6 +155,7 @@ by using `Plugin/Visualization/Image View` plugin and then, in the top down menu
 
 ## Demo
 Please refer to the [Docker solution documentation](docker/README.md) and in particular to the Dockerfile_test part to read how run a demonstration of the code. 
+The expected outcome of this demo is running the final part of the pipeline(i.e. the mutual gaze detector classifier) on recorded rosbag visualizing output on screen. The rosbag provided already contains preprocessed data. In this way, no heavy processing has to be running online eliminating any hardware requirement.
 
 ## Remarks on Code Deployment
 
