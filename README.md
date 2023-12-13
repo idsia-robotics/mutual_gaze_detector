@@ -1,11 +1,18 @@
 Mutual Gaze Detector
 ==============
 
-* [System Hardware Requirements](#system-hardware-requirements)
-
 This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications which requires reasonable tracking up 5 meters.
 
 [![Mutual Gaze Detector at Work](https://github.com/idsia-robotics/mutual_gaze_detector/blob/hri/assets/readme.gif)](https://raw.githubusercontent.com/idsia-robotics/mutual_gaze_detector/hri/assets/readme.mp4)
+
+Table of Content
+* [System Hardware Requirements](#system-hardware-requirements)
+* [Dockerized Solutions](#dockerized-solutions)
+* [Native Installation](#native-installation)
+* [Demo]{#demo}
+* [Remarks on Code Deployment]{#remarks-on-code-deployment}
+* [Maintanance]{#maintanance}
+* [License]{#license}
 
 We provide two ways of installation: from scratch on native Ubuntu 22.04 or Docker images to simplify the setup procedure.
 
