@@ -13,7 +13,7 @@ Table of Content
 * [Native Installation](#native-installation)
 * [Demo](#demo)
 * [Remarks on Code Deployment](#remarks-on-code-deployment)
-* [Maintanance](#maintanance)
+* [Maintenance](#maintenance)
 * [License](#license)
 
 ## System Hardware Requirements
