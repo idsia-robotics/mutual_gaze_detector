@@ -1,7 +1,7 @@
 Mutual Gaze Detector
 ==============
 
-This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications which requires reasonable tracking up 5 meters.
+This repository contains a ROS2 implementation of a mutual gaze detector designed for Human Robot Interaction applications which requires good performance up to a subject distance of 5 meters.
 
 We provide two ways of installation: from scratch on native Ubuntu 22.04 or Docker images to simplify the setup procedure.
 
@@ -35,7 +35,7 @@ This image allows to display the capabilities of the software without needing sp
 The second one is instead already set up to run the full pipeline provided that the right hardware is available.
 For this second setup, the host has the requirement to run a Linux distro. This is due to some known issues in Windows in the connection to a Azure Kinect from a process running inside a Docker container.
 
-[Here](docker/README.md) is reported a more detailed and comprehensive documentation for the Docker part.
+A comprehensive documentation of the Docker images is available [Here](docker/README.md)
 
 ## Native Installation
 
@@ -173,7 +173,7 @@ The pre-processing stage in this pipeline is designed to generate meaningful dat
 
 ## Maintenance
 
-Please note that while this release provides the current version of the code utilized in the referenced paper, ongoing development might come at a later stage, as well as bug fixes, and updates to the documentation.Feedback and contributions are appreciated to shape the future iterations of this code.
+Please note that while this release provides the current version of the code utilized in the referenced paper, ongoing development might come at a later stage, as well as bug fixes, and updates to the documentation. Feedback and contributions are appreciated to shape the future iterations of this code.
 
 ## License
 
